@@ -1,0 +1,13 @@
+<form action="#poll" method="post">
+	<tal:block tal:condition="not:archive">
+		<p class="null">${lang/NULL}</p>
+		<input type="submit" value="${lang/ARCHIVE}" class="button" title="${lang/ARCHIVE_TITLE}" name="archive-poll" />
+		<input name="propose-poll" type="submit" value="${lang/PROPOSE}" class="button" title="${lang/PROPOSE_TITLE}" />
+	</tal:block>
+	<tal:block tal:condition="archive">
+		<p class="null">${lang/NULL_ARCHIVE}</p>
+		<input name="propose-poll" type="submit" value="${lang/PROPOSE}" class="button" title="${lang/PROPOSE_TITLE}" />
+		<input type="submit" value="${lang/BACK}" class="button" title="${lang/BACK_TITLE}" name="back-poll" />
+	</tal:block>
+	
+</form>

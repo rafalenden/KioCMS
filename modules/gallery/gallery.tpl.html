@@ -1,0 +1,11 @@
+<ol class="entries">
+	<li class="box" tal:repeat="album albums">
+		<a class="minipic" href="${HREF}gallery/album/${album/id}/${clean_url:album/name}" tal:condition="album/thumbnail"><img class="thumb" src="${LOCAL}modules/gallery/images/albums/${album/id}.${album/thumbnail}" alt="${album/name}" title="${album/name}" /></a>
+		<h3 class="title"><a href="${HREF}gallery/album/${album/id}/${clean_url:album/name}">${album/name}</a></h3>
+		<ul class="bar">
+			<li>${t:Photos}: ${album/images}</li>
+			<li>${t:Created}: ${clock:album/added cfg:short_date_format}</li>
+		</ul>
+		<div class="text">${album/description}</div>
+	</li>
+</ol>

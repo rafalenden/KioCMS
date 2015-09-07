@@ -1,0 +1,82 @@
+<form action="#" accept-charset="UTF-8" method="post">
+	${note}
+	<div class="form-item">
+		<label for="form-logname" tal:attributes="class if:err/logname_empty | err/logname_exists then:'wrong'">
+			${t:Logname}: <span class="required">*</span>
+		</label>
+		<input class="auto left" size="40" type="text" name="logname" id="form-logname" value="${form/logname}" />
+		<input type="button" id="check_logname" class="button" value="${t:Check availability}" />
+		<div id="logname_availability" class="tip">${t:LOGNAME_NOTE}</div>
+	</div>
+
+	<div class="form-item">
+		<label for="form-nickname" tal:attributes="class if:err/nickname_empty | err/nickname_exists then:'wrong'">
+			${t:Nickname}: <span class="required">*</span>
+		</label>
+		<input class="auto left" size="40" type="text" name="nickname" id="form-nickname" value="${form/nickname}" />
+		<input type="button" onclick="$.post(LOCAL + 'modules/registration/check.php', {nickname: $('#form-nickname').val()}, function(data) {$('#nickname_availability').html(data);});" class="button" value="${t:Check availability}" />
+		<div id="nickname_availability" class="tip">${t:NICKNAME_NOTE}</div>
+	</div>
+
+	<div class="form-item">
+		<label for="form-pass" tal:attributes="class if:err/pass_empty | err/pass_not_match then:'wrong'">
+			${t:Password}: <span class="required">*</span>
+		</label>
+		<input class="text" size="60" type="password" name="pass" id="form-pass" value="${form/pass}" />
+		<div class="tip">${t:PASS_NOTE}</div>
+	</div>
+
+	<div class="form-item">
+		<label for="form-pass2" tal:attributes="class if:err/pass_empty | err/pass_not_match then:'wrong'">
+			${t:Repeat password}: <span class="required">*</span>
+		</label>
+		<input class="text" size="60" type="password" name="pass2" id="form-pass2" value="${form/pass2}" />
+		<div class="tip">${t:PASS_NOTE}</div>
+	</div>
+
+	<div class="form-item">
+		<label for="form-email" tal:attributes="class if:err/email_empty | err/email_invalid | err/email_exists then:'wrong'">
+			${t:E-mail}: <span class="required">*</span>
+		</label>
+		<input class="text" size="60" type="text" name="email" id="form-email" value="${form/email}" />
+		<div class="tip">${t:EMAIL_NOTE}</div>
+	</div>
+
+	<fieldset>
+		<legend>${t:E-mail options}</legend>
+
+		<div class="form-item">
+			<label for="form-newsletter" class="option">
+				<input name="newsletter" type="checkbox" id="form-newsletter" tal:attributes="checked form/newsletter | php:!_POST['register']" />
+				${t:Newsletter}
+			</label>
+		</div>
+
+		<div class="form-item">
+			<label for="form-pm_notify" class="option">
+				<input name="pm_notify" type="checkbox" id="form-pm_notify" tal:attributes="checked form/pm_notify | php:!_POST['register']" />
+				${t:PM notify}
+			</label>
+		</div>
+
+		<div class="form-item">
+			<label for="form-hide_email" class="option">
+				<input name="hide_email" type="checkbox" id="form-hide_email" tal:attributes="checked form/hide_email" />
+				${t:Hide my e-mail address}
+			</label>
+		</div>
+	</fieldset>
+
+	<div class="form-item" tal:condition="cfg:show_rules registration">
+		<div class="rules">${php:parse('RULES')}</div>
+		<label tal:attributes="class if:err/rules_not_accepted then:'wrong'">
+			<input type="checkbox" name="rules" tal:attributes="checked form/rules" />
+			${t:I agree}: <span class="required">*</span>
+		</label>
+	</div>
+
+	<div class="form-bottom">
+		<input class="button submit" type="submit" name="register" value="${t:Register}" />
+		<input type="hidden" name="auth" value="${AUTH}" />
+	</div>
+</form>

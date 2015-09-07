@@ -1,0 +1,36 @@
+<form method="post" id="all_checkboxes" action="${HREF}admin/modules/news">
+	<table class="list">
+		<thead>
+			<tr>
+				<td class="pagination" colspan="7">${pagination} ${limit_form}</td>
+			</tr>
+			<tr>
+				<th class="first tight"><input class="check_all" type="checkbox" value="all_checkboxes" /></th>
+				<th class="left" colspan="2">${sort/n_id} / ${sort/n_title} / ${sort/lang} / ${sort/content}</th>
+				<th>${sort/nickname}</th>
+				<th>${sort/c_name}</th>
+				<th>${sort/added}</th>
+				<th class="last">${t:Options}</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td class="pagination" colspan="7">${pagination}
+					<p class="total">${t:Total}: <strong>${stats/posted_news}</strong></p>
+					<input type="submit" class="button" name="delete" value="${t:Delete selected}" />
+				</td>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr tal:repeat="entry entries">
+				<td class="first"><label><input type="checkbox" name="entry" value="${entry/id}" /></label></td>
+				<td class="tight">${entry/id}</td>
+				<td class="left"><a href="${HREF}news/read/${entry/id}/${entry/url_title}" class="block">${entry/title} <img src="${LOCAL}images/flags/${entry/lang}.png" alt="${entry/lang}" title="${entry/lang}" tal:condition="entry/lang" /><span class="description">${php:nl2br(cut(entry['content'], 100))}</span></a></td>
+				<td>${entry/author}</td>
+				<td><a href="${HREF}news/category/${entry/category_id}/${clean_url:entry/c_name}" tal:condition="entry/c_name">${entry/c_name}</a></td>
+				<td>${timer:entry/added}</td>
+				<td class="last"><a href="${HREF}admin/modules/news/edit/${entry/id}" class="edit">${t:Edit}</a> | <a href="${HREF}guestbook/delete/${entry/id}" class="delete">${t:Delete}</a></td>
+			</tr>
+		</tbody>
+	</table>
+</form>

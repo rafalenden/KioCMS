@@ -1,0 +1,38 @@
+<h3 class="subtitle" tal:condition="image/description">${image/description}</h3>
+
+<p class="pagination">
+	<a href="${HREF}gallery/image/${image/prev}#gallery" title="${t:Previous photo}" tal:condition="image/prev">${t:&nbsp; ‹ &nbsp;}</a><span>${php:t('%current of %total', array('%current' => image['current'], '%total' => image['counter']))}</span><a href="${HREF}gallery/image/${image/next}#gallery" title="${t:Next photo}" tal:condition="image/next">${t:&nbsp; › &nbsp;}</a>
+</p>
+
+<div class="image_contanier">
+	<img src="${LOCAL}${image/src}" alt="${image/name}" class="main_image" />
+	<div class="thumbnails_map">
+		<a href="${HREF}gallery/image/${thumb/id}/${clean_url:thumb/name}#gallery" tal:attributes="class php:thumb['id'] EQ image['id'] ? 'active' : 'inactive'; title if:thumb/description then:thumb/description" tal:repeat="thumb thumbs"><img class="thumb" alt="${thumb/name}" src="${LOCAL}modules/gallery/images/${thumb/id}.${thumb/file_extension}"/></a>
+	</div>
+</div>
+
+<div class="box">
+	<dl class="options">
+		<dt><span>${t:Options}</span></dt>
+		<dd><a href="#left">${t:Flip to left}</a></dd>
+		<dd><a href="#right">${t:Flip to right}</a></dd>
+		<dd class="separator"><a href="zoom">${t:Zoom in}</a></dd>
+		<dd><a href="zoom">${t:Default size}</a></dd>
+		<dd><a href="zoom">${t:Zoom out}</a></dd>
+	</dl>
+	<p class="border-1">${t:Informations}:</p>
+	<dl class="elements">
+		<dt>${t:Added by}:</dt>
+		<dd>${image/author}</dd>
+		<dt>${t:Album}:</dt>
+		<dd><a href="${HREF}gallery/album/${image/album_id}/${clean_url:image/a_name}" tal:attributes="title if:image/a_description then:image/a_description">${image/a_name}</a></dd>
+		<dt>${t:Add date}:</dt>
+		<dd>${clock:image/added}</dd>
+		<dt>${t:Rate}:</dt>
+		<dd>${image/rating}</dd>
+		<!--<dt>${t:Size}:</dt>
+		<dd>${image/width} × ${image/height} (${php:round_filesize(ROOT . image['src'])})</dd>-->
+	</dl>
+</div>
+
+<tal:block tal:condition="comments">${comments}</tal:block>

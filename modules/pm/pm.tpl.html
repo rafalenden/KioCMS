@@ -1,0 +1,41 @@
+<form method="post" id="all_checkboxes" action="#" tal:condition="messages">
+	${note}
+
+	<fieldset>
+		<legend>${t:Manage messages}</legend>
+		<select name="action">
+			<option value="read">${t:Mark as read the selected messages}</option>
+			<option value="unread">${t:Mark as unread the selected messages}</option>
+			<option value="delete">${t:Delete the selected messages}</option>
+		</select>
+		<input type="submit" name="do" value="${t:Execute}" />
+	</fieldset>
+
+	<table class="list floating">
+		<thead>
+			<tr>
+				<th class="first tight"><input type="checkbox" class="check_all" value="all_checkboxes" /></th>
+				<th class="left">${sort/subject} / ${sort/message}</th>
+				<th>${sort/nickname}</th>
+				<th class="last">${sort/sent}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr tal:repeat="message messages" tal:attributes="class if:repeat/message/even then:'even' else:'odd'">
+				<td class="first"><input type="checkbox" name="messages[]" value="${message/id}" /></td>
+				<td class="${php:message['is_read'] ? 'left read' : 'left unread'}"><a href="${HREF}pm/${u1}/read/${message/id}" class="block">${message/subject}<span class="tip">${php:cut(message['message'], 40)}</span></a></td>
+				<td>${message/nickname}</td>
+				<td class="last">${clock:message/sent}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="pagination float-left" tal:condition="pagination">${pagination}</p>
+	<dl class="chart" tal:condition="max">
+		<dd>
+			<p style="width: ${php:@round(100 * (total / max), 1)}%;">&nbsp;</p>
+			<span>${total}/${max}</span>
+		</dd>
+	</dl>
+					
+</form>

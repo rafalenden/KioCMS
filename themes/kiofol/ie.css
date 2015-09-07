@@ -1,0 +1,3 @@
+hr {margin: -1px 0;}
+label input {vertical-align: baseline; margin: -2px;}
+a.inactive img {filter: alpha(opacity = 40);}

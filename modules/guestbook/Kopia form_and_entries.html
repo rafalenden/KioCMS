@@ -1,0 +1,72 @@
+<form action="#" method="post">
+	${note}
+	<div class="form-item">
+		<label for="form-author" tal:attributes="class if:err/author_empty | err/author_exists ? 'wrong'">${t:Author}: <span class="required" title="${t:Required field}">*</span></label>
+		<input class="text" size="60" type="text" id="form-author" name="author" value="${form/author}" />
+	</div>
+	<div class="form-item">
+		<label for="form-email" tal:attributes="class if:err/email_invalid ? 'wrong'">${t:E-mail}</label>
+		<input class="text" size="60" type="text" name="email" id="form-email" value="${form/email}" />
+	</div>
+	<div class="form-item">
+		<label for="form-website">${t:Website}</label>
+		<input class="text" size="60" type="text" name="website" id="form-website" value="${form/website}" />
+	</div>
+	<input class="submit" type="submit" name="${if:form/edit_mode ? 'edit' : 'add'}" value="${php:form['edit_mode'] ? t('Save') : t('Add')}" /><input type="hidden" name="auth" value="${AUTH}" />
+</form>
+
+<form action="#" method="post">
+	${note}
+	<table class="form">
+		<tr class="top">
+			<th><label for="form-author" tal:attributes="class if:err/author_empty | err/author_exists ? 'wrong'"><span class="required">*</span> ${t:Author}</label></th>
+			<td><input class="text" size="35" type="text" id="form-author" name="author" value="${form/author}" tal:attributes="disabled php:LOGGED AND !form['edit_mode']" /></td>
+		</tr>
+		<tr>
+			<th><label for="form-email" tal:attributes="class if:err/email_invalid ? 'wrong'">${t:E-mail}</label></th>
+			<td><input class="text" size="40" type="text" name="email" id="form-email" value="${form/email}" /></td>
+		</tr>
+		<tr>
+			<th><label for="form-website">${t:Website}</label></th>
+			<td><input class="text" size="35" type="text" name="website" id="form-website" value="${form/website}" /></td>
+		</tr>
+		<tr>
+			<th><label for="form-message" tal:attributes="class if:err/message_empty | err/message_too_long | err/message_spam ? 'wrong'"><span class="required">*</span> ${t:Message}</label></th>
+			<td>
+				${panel}
+				<textarea class="text limit" name="message" id="form-message" rows="5" cols="45">${form/message}</textarea>
+				<div class="tip" tal:condition="cfg/guestbook/message_max">${t:Chars left}: <var title="${cfg/guestbook/message_max}" class="limit form-message">${cfg/guestbook/message_max}</var></div>
+			</td>
+		</tr>
+		<tr class="bottom">
+			<th></th>
+			<td><input class="button" type="submit" name="${if:form/edit_mode ? 'edit' : 'add'}" value="${php:form['edit_mode'] ? t('Save') : t('Add')}" /></td>
+		</tr>
+	</table>
+	<input type="hidden" name="auth" value="${AUTH}" />
+</form>
+
+
+<ol class="entries" tal:condition="entries">
+	<li class="box" id="entry-${entry/id}" tal:repeat="entry entries">
+		<span class="minipic" tal:condition="entry/avatar"><img src="${LOCAL}images/avatars/${entry/author_id}.${entry/avatar}" alt="${entry/avatar}" /></span>
+		<div class="header"><span class="nr">${entry/x}</span>
+			<p class="author"><strong>${entry/author}</strong>
+				<a tal:condition="entry/email" href="mailto:${entry/email}" class="e-mail"><img class="e-mail" src="${LOCAL}templates/${TPL}/images/e-mail.png" alt="e-mail" title="${t:E-mail}" /></a>
+				<a tal:condition="entry/website" href="${entry/website}" class="website"><img class="website" src="${LOCAL}templates/${TPL}/images/website.png" alt="website" title="${t:Website}" /></a>
+			</p>
+		</div>
+		<ul class="bar">
+			<li class="added"><a href="#entry-${entry/id}">${timer:entry/added}</a></li>
+			<li><a href="${HREF}guestbook/edit/${entry/id}" class="edit"><span>${t:Edit}</span></a></li>
+			<li><a href="#entry-${entry/id}" class="delete" accesskey="${entry/id}"><span>${t:Delete}</span></a></li>
+		</ul>
+		<div class="text">${entry/message}</div>
+		<div class="signature" tal:condition="entry/signature">${entry/signature}</div>
+	</li>
+</ol>
+
+<tal:block>${pagination}</tal:block>
+
+<h3 class="subtitle2">Dodaj wpis</h3>
+

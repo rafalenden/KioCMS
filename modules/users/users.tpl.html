@@ -1,0 +1,58 @@
+<fieldset id="box-browse-options" class="collapsible collapsed">
+	<legend><a href="#box-browse-options">${t:Browse options}</a></legend>
+	<form>
+		<label>
+			Order by:
+			<select name="sort">
+				<option value="nickname">${t:Nickname}</option>
+				<option value="">${t:Group name}</option>
+				<option value="">${t:Gender}</option>
+				<option value="">${t:Title}</option>
+				<option value="">${t:E-mail address}</option>
+				<option value="">${cfg:communicator_name}</option>
+				<option value="">${t:City}</option>
+				<option value="">${t:Country}</option>
+				<option value="">${t:Register date}</option>
+			</select>
+			<select name="sort">
+				<option value="asc">${t:Ascending}</option>
+				<option value="desc">${t:Descending}</option>
+			</select>
+		</label>
+		<input type="submit" name="do" value="${t:Show}" />
+	</form>
+</fieldset>
+
+
+<table class="list floating">
+	<thead>
+		<tr class="sort">
+			<th class="left">${sort/nickname}</th>
+			<th>${t:Contact}</th>
+			<th>${sort/locality}</th>
+			<th class="last">${sort/registered}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="${if:repeat/user/even then:'even' else:'odd'}" tal:repeat="user users">
+			<td class="left">
+				${user/nickname} ${user/gender}
+				<div class="tip" tal:condition="user/title">${user/title}</div>
+			</td>
+			<td>
+				<a href="${mailto:user/email}"><img src="${LOCAL}themes/${THEME}/images/e-mail.png" alt="e-mail" title="${t:Send e-mail}" /></a>
+				<a href="${HREF}pm/write/${user/id}"><img src="${LOCAL}themes/${THEME}/images/pm.png" alt="pw" title="${t:Send PM}" /></a>
+				<tal:block tal:condition="user/communicator"> ${communicator:user/communicator}</tal:block>
+			</td>
+			<td>
+				${user/locality}
+				<img src="${LOCAL}images/flags/${user/country}.png" class="flag" alt="${user/country}" title="${php:user['country']} (${user/country})" tal:condition="user/country" />
+			</td>
+			<td class="last">${clock:user/registered}</td>
+		</tr>
+	</tbody>
+</table>
+
+<p class="pagination float-left">${pagination}</p>
+
+

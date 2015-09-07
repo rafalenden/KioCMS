@@ -1,0 +1,38 @@
+<form method="post" id="all_checkboxes" action="#">
+	<table class="list">
+		<thead>
+			<tr>
+				<td class="pagination" colspan="5">${pagination} ${limit_form}</td>
+			</tr>
+			<tr>
+				<th class="first"><input type="checkbox" class="check_all" value="all_checkboxes" /></th>
+				<th class="left">${sort/nickname} / ${sort/author_ip}</th>
+				<th class="left">${sort/message}</th>
+				<th>${sort/added}</th>
+				<th class="last">${t:Options}</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td class="pagination" colspan="5">${pagination}
+					<p class="total">${t:Total}: <strong>${stats/guestbook_entries}</strong></p>
+					<input type="submit" class="button" name="delete" value="${t:Delete selected}" />
+				</td>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr tal:repeat="entry entries">
+				<td class="first"><label><input type="checkbox" name="entry" value="${entry/id}" /></label></td>
+				<td class="left">
+					${entry/author}
+					<a href="mailto:${entry/email}" class="e-mail" tal:condition="entry/email"><img class="e-mail" src="${LOCAL}templates/${THEME}/images/e-mail.png" alt="e-mail" title="${t:E-mail}" /></a>
+					<a href="${entry/website}" class="website" tal:condition="entry/website"><img class="website" src="${LOCAL}templates/${THEME}/images/website.png" alt="website" title="${t:Website}" /></a>
+					<div class="description get_host">${entry/author_ip}</div>
+				</td>
+				<td class="left">${nl2br:entry/message}</td>
+				<td>${timer:entry/added}</td>
+				<td class="last"><a href="${HREF}guestbook/edit/${entry/id}" class="edit">E</a> | <a href="${HREF}guestbook/delete/${entry/id}" class="delete">U</a></td>
+			</tr>
+		</tbody>
+	</table>
+</form>

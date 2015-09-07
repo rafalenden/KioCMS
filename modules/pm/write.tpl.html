@@ -1,0 +1,54 @@
+<form action="#" method="post">
+	${note}
+	
+	<div class="form-item">
+		<label for="form-sender">${t:Sender}: <span class="required" title="${t:Required field}">*</span></label>
+		<input class="text" type="text" size="60" id="form-sender" disabled="disabled" value="${NICKNAME}" />
+	</div>
+	<div class="form-item">
+		<label for="form-receiver" tal:attributes="class if:err/receiver_empty | err/receiver_not_exists then:'wrong'">${t:Receiver}: <span class="required" title="${t:Required field}">*</span></label>
+		<input class="text" type="text" size="60" name="receiver" id="form-receiver" value="${form/receiver}" />
+	</div>
+	<div class="form-item">
+		<label for="form-subject" tal:attributes="class if:err/subject_empty then:'wrong'">${t:Subject}: <span class="required" title="${t:Required field}">*</span></label>
+		<input class="text" type="text" size="60" name="subject" id="form-subject" value="${form/subject}" />
+	</div>
+	<div class="form-item">
+		<label for="form-message" tal:attributes="class if:err/message_empty then:'wrong'">${t:Message}: <span class="required" title="${t:Required field}">*</span></label>
+		<textarea class="text limit resizable bbcode" name="message" id="form-message" cols="60" rows="10">${form/message}</textarea>
+		<div class="tip" tal:condition="cfg:message_max pm">${t:Chars limit}: <var title="${cfg:message_max pm}" id="limit-form-message" class="limit form-message">${cfg:message_max pm}</var></div>
+	</div>
+
+	<fieldset id="box-preferences" class="collapsible collapsed">
+		<legend><a href="#box-preferences">${t:Options}</a></legend>
+		<div class="form-item">
+			<label>
+				<input name="save" type="checkbox" tal:attributes="checked form/save" />
+				${t:Save in outbox}
+			</label>
+		</div>
+		<div class="form-item">
+			<label>
+				<input name="bbcode" type="checkbox" tal:attributes="checked form/bbcode; disabled not:php:strpos(Kio::getConfig('parsers'), '1') !== false" />
+				${t:Use BBCode}
+			</label>
+		</div>
+		<div class="form-item">
+			<label>
+				<input name="autolinks" type="checkbox" tal:attributes="checked form/autolinks; disabled not:php:strpos(Kio::getConfig('parsers'), '2') !== false" />
+				${t:Create automatically clickable links}
+			</label>
+		</div>
+		<div class="form-item">
+			<label>
+				<input name="emoticons" type="checkbox" tal:attributes="checked form/emoticons; disabled not:php:strpos(Kio::getConfig('parsers'), '3') !== false" />
+				${t:Use emoticons}
+			</label>
+		</div>
+	</fieldset>
+
+	<div class="form-item">
+		<input type="submit" name="send" value="${t:Send}" />
+		<input type="hidden" name="auth" value="${AUTH}" />
+	</div>
+</form>

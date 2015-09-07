@@ -1,0 +1,9 @@
+<form action="#poll" method="post">
+	<div class="negative" tal:condition="poll/error">${lang/ERROR_PROPOSE}</div>
+	<div class="neutral" tal:condition="not:poll/error">${lang/WELCOME_MESSAGE_PROPOSE}</div>
+	<label tal:attributes="class php:poll['error'] ? 'text error' : 'text'">${lang/PROPOSE_TEXT}
+		<textarea class="text" name="propose_text-poll" rows="2" cols="17">${poll/propose_text}</textarea>
+	</label>
+	<input type="submit" value="${lang/SEND}" class="button" name="add_propose-poll" />
+	<input type="submit" value="${lang/BACK}" class="button" title="${lang/BACK_TITLE}" name="back-poll" />
+</form>

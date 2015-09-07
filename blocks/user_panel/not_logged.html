@@ -1,0 +1,14 @@
+<form action="#user_panel" method="post">
+	${note}
+	<label class="text ${if:err/logname_empty | err/logname_not_exists then:'wrong'}">
+		${t:Logname}: <span class="required" title="${t:Required field}">*</span>
+		<input type="text" class="text" name="logname-session" value="${form/logname}" />
+	</label>
+	<label class="text ${if:err/password_empty | err/password_invalid then:'wrong'}">
+		${t:Password}: <span class="required" title="${t:Required field}">*</span>
+		<input type="password" class="text" name="password-session" value="${form/password}" />
+	</label>
+	<input type="submit" value="${t:Log in}" name="login" class="button" />
+	<input name="user_panel" value="1" type="hidden" />
+</form>
+<br /><a href="${HREF}registration">${t:Register}</a><br /><a href="${HREF}password">${t:Restore password}</a>

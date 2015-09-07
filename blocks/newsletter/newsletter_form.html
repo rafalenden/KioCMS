@@ -1,0 +1,9 @@
+<form action="#newsletter" method="post">
+	${note}
+	<label class="text ${if:err/email_empty | err/email_invalid | err/email_exists_or_not ? 'wrong'}">
+		${t:E-mail address} <input type="text" name="email-newsletter" class="text" value="${form/email}" />
+	</label>
+	<input type="hidden" name="auth" value="${AUTH}" />
+	<input class="button" type="submit" name="add-newsletter" value="${t:Add}" />
+	<input class="button" type="submit" name="delete-newsletter" value="${t:Delete}" />
+</form>

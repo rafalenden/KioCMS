@@ -1,0 +1,14 @@
+<div class="nickname border-2">
+	${message/nickname}<br />
+	<img src="${LOCAL}images/avatars/${message/connector_id}.${message/avatar}" alt="${t:Avatar}"  title="${t:Avatar}" class="avatar" tal:condition="message/avatar" />
+</div>
+<div class="sent border-1">${clock:message/sent}</div>
+<div class="message border-2">${message/message}</div>
+
+<form method="post" action="${HREF}pm/${u1}" class="border-1">
+	<a href="${HREF}pm/write/resend/${message/id}" tal:condition="message/folder">${t:Resend}</a>
+	<a href="${HREF}pm/write/reply/${message/id}" tal:condition="not:message/folder">${t:Reply}</a>
+	<input class="button" type="submit" value="${t:Delete}" />
+	<input value="delete" type="hidden" name="action" />
+	<input type="hidden" name="messages[]" value="${u3}" />
+</form>

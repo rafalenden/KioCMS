@@ -1,0 +1,173 @@
+<form action="${LOCAL}admin/system" method="post">
+	<table class="form">
+		<tr class="top title"><th></th><td>Podstawowe informacje</td></tr>
+		<tr>
+			<th><label for="form-subtitle" tal:attributes="class php:errors[0] ? 'error' : null"><span class="required">*</span> Tytuł strony</label></th>
+			<td><input type="text" name="form[title]" value="${form/title}" class="text" id="form-subtitle" size="35" /></td>
+		</tr>
+		<tr>
+			<th><label for="form-keywords">Słowa kluczowe</label></th>
+			<td><input type="text" name="form[keywords]" id="form-keywords" value="${form/keywords}" class="text" size="35" /></td>
+		</tr>
+		<tr>
+			<th><label for="form-description">Opis strony</label></th>
+			<td><input type="text" name="form[description]" id="form-description" value="${form/description}" class="text" size="35" /></td>
+		</tr>
+		<tr>
+			<th><label for="form-head">Dodatkowe tagi w &lt;head&gt;</label></th>
+			<td>
+				<textarea class="text" name="form[head]" id="form-head" rows="4" cols="35">${form/head}</textarea>
+				<div class="note">Wszytko co tutaj umieścisz będzie widoczne w pliku HTML pomiędzy znacznikami &lt;head&gt; oraz &lt;/head&gt;</div>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="form-separator" tal:attributes="class php:errors[1] ? 'error' : null"><span class="required">*</span> Separator</label></th>
+			<td><input type="text" name="form[separator]" value="${form/separator}" class="auto" id="form-separator" size="4" /></td>
+		</tr>
+
+		<tr class="title"><th></th><td>Personalizacja</td></tr>
+		<tr>
+			<th><label for="form-template" tal:attributes="class php:errors[3] ? 'error' : null"><span class="required">*</span> Szablon</label></th>
+			<td>
+				<select name="form[template]" id="form-template">';
+					<option value="${dir}" tal:attributes="selected php:form['template'] == dir" tal:repeat="dir templates">${dir}</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="form-columns" tal:attributes="class php:errors[4] ? 'error' : null"><span class="required">*</span> Ilość kolumn</label></th>
+			<td>
+				<select name="form[columns]" id="form-columns">
+					<option value="1" tal:attributes="selected php:form['columns'] == 1">Jedna</option>
+					<option value="2" tal:attributes="selected php:form['columns'] == 2">Dwie</option>
+					<option value="3" tal:attributes="selected php:form['columns'] == 3">Trzy</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th rowspan="2"><label for="form-date_format" tal:attributes="class php:errors[5] ? 'error' : null"><span class="required">*</span> Format daty</label></th>
+			<td>
+				<select onchange="document.getElementById('f_date_format').value = this.options[this.selectedIndex].value;">
+					<option value="${date_format}" tal:attributes="selected php:form['date_format'] == date_format" tal:repeat="date_format date_formats">${php:date(date_format, TIMESTAMP)}</option>
+					<option value="${form/date_format}" tal:attributes="selected php:!in_array(form['date_format'], date_formats)">Inny - wpisz niżej</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" name="form[date_format]" id="form-date_format" value="${form/date_format}" class="text" size="35" />
+				<div class="note">Aby dowiedzieć się więcej przeczytaj <a href="http://www.php.net/date" class="external">opis funkcji &quot;date&quot;</a></div>
+			</td>
+		</tr>
+		<tr>
+			<th rowspan="2"><label for="form-short_date_format" tal:attributes="class php:errors[6] ? 'error' : null"><span class="required">*</span> Format krótkiej daty</label></th>
+			<td>
+				<select onchange="document.getElementById('f_short_date_format').value = this.options[this.selectedIndex].value;">
+					<option value="${short_date_format}" tal:attributes="selected php:form['short_date_format'] == short_date_format" tal:repeat="short_date_format short_date_formats">${php:date(short_date_format, TIMESTAMP)}</option>
+					<option value="${form/short_date_format}" tal:attributes="selected php:!in_array(form['short_date_format'], short_date_formats)">Inny - wpisz niżej</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" name="form[short_date_format]" id="form-short_date_format" value="${form/short_date_format}" class="text" size="35" />
+				<div class="note">Aby dowiedzieć się więcej przeczytaj <a href="http://www.php.net/date" class="external">opis funkcji &quot;date&quot;</a></div>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="form-pagination_type">Domyślna strefa czasowa</label></th>
+			<td>
+				<select name="form[time_zone]">
+					<option tal:attributes="selected php:form['time_zone'] == repeat.time_zone.key" value="${repeat/time_zone/key}" tal:repeat="time_zone time_zones">${time_zone}</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th rowspan="3"><label>Opcje wizualizacyjne</label></th>
+			<td><label><input name="blocks_headers" type="checkbox" tal:attributes="checked form/blocks_headers" /> Pokaż nagłówki bloków</label></td>
+		</tr>
+		<tr>
+			<td><label><input name="styled_usernames" type="checkbox" tal:attributes="checked form/nicknames_inline" /> Stylowanie nazw użytkowników</label></td>
+		</tr>
+		<tr>
+			<td>
+				<label><input name="bbcode" type="checkbox" tal:attributes="checked form/parser/1" /> BBCode</label>
+				<div class="note">Formatuje tekst (np. [b]pogrubienie[/b[)</div>
+			</td>
+		</tr>
+		<tr class="title"><th></th><td>Konfiguracja języka</td></tr>
+		<tr>
+			<th><label for="form-language" tal:attributes="class php:errors[2] ? 'error' : null"><span class="required">*</span> Domyślny język</label></th>
+			<td>
+				<select name="form[language]" id="form-language">
+					<option value="${language/code}" tal:attributes="selected php:form['language'] == repeat.languages.code" tal:repeat="language languages">${language} (${repeat/language/key})</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th rowspan="2"><label>Wielojęzyczność</label></th>
+			<td>
+				<label><input name="multilang" type="checkbox" tal:attributes="checked form/multilang" /> Włącz obsługę języków</label>
+				<div class="note">Pozwala użytkownikom wybierać język strony po czym wyświetla treść zależną od dokonanego wyboru</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label><input name="detect_language" type="checkbox" tal:attributes="checked form/detect_language" /> Wykryj automatycznie język użytkownika</label>
+				<div class="note">Wyświetla stronę w tym samym języku co przeglądarka odwiedzającego</div>
+			</td>
+		</tr>
+		<tr class="title"><th></th><td>Komunikator</td></tr>
+		<tr>
+			<th><label for="form-communicator_name" tal:attributes="class php:errors[99] ? 'error' : null"><span class="required">*</span> Nazwa komunikatora</label></th>
+			<td><input type="text" name="form[communicator_name]" value="${form/communicator_name}" class="text" id="form-communicator_name" size="35" /></td>
+		</tr>
+		<tr>
+			<th><label for="form-communicator_url" tal:attributes="class php:errors[99] ? 'error' : null"><span class="required">*</span> Adres odsyłacza</label></th>
+			<td>
+				<input type="text" name="form[communicator_url]" value="${form/communicator_url}" class="text" id="form-communicator_url" size="35" />
+				<div class="note">Odnośnik wykonujący jakąś akcję w komunikatorze (np. otwiera okno rozmowy)<br />Gdzie &quot;<strong>%s</strong>&quot; to identyfikator (numer lub login) użytkownika</div>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="form-communicator_image" tal:attributes="class php:errors[99] ? 'error' : null"><span class="required">*</span> Adres obrazka statusu</label></th>
+			<td>
+				<input type="text" name="form[communicator_image]" value="${form/communicator_image}" class="text" id="form-communicator_image" size="35" />
+				<div class="note">Adres obrazka, który pokazuje czy dany użytkownik jest aktualnie dostępny<br />Gdzie &quot;<strong>%s</strong>&quot; to identyfikator (numer lub login) użytkownika</div>
+			</td>
+		</tr>
+		<tr class="title"><th></th><td>Przyjazne adresy</td></tr>
+		<tr>
+			<th><label>Zamiana znaków</label></th>
+			<td>
+				<textarea name="seo_characters" class="auto" cols="3" rows="6">${form/seo_characters}</textarea> &gt;
+				<textarea name="seo_characters2" class="auto" cols="3" rows="6">${form/seo_characters2}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="form-url_type">Typ adresu</label></th>
+			<td>
+				<select name="form[url_type]" id="form-url_type">
+					<option value="0" tal:attributes="selected php:form['url_type'] == 0">Domyślny (www.url.pl/index.php/przykład)</option>
+					<option value="1" tal:attributes="selected php:form['url_type'] == 1">Ciąg zapytania (www.url.pl/?przykład)</option>
+					<option value="2" tal:attributes="selected php:form['url_type'] == 2">Mod_rewrite (www.url.pl/przykład)</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th><label>${lang_admin/BLOCKS_LEFT}</label></th>
+			<td class="blocks">${blocks/left}</td>
+		</tr>
+		<tr>
+			<th><label>${lang_admin/BLOCKS_RIGHT}</label></th>
+			<td class="blocks">${blocks/right}</td>
+		</tr>
+		<tr class="bottom">
+			<th></th>
+			<td>
+				<input type="submit" name="save" value="${lang_admin/save}" class="button submit" />
+				<input type="reset" value="${lang_admin/RESET}" class="button reset" />
+			</td>
+		</tr>
+	</table>
+</form>

@@ -1,0 +1,37 @@
+
+<h3 class="subtitle2" id="comments">${php:t('Comments (%comments)', array('%comments' => total_comments))}<a href="#comments" class="anchor">¶</a></h3>
+
+<ol class="entries comments" tal:condition="entries">
+	<li class="box" id="comment-${entry/comment_id}" tal:repeat="entry entries">
+		<span class="minipic" tal:condition="entry/avatar">
+			<img src="${LOCAL}images/avatars/${entry/comment_author_id}.${entry/avatar}" alt="${entry/avatar}" />
+		</span>
+		<div class="header">
+			<p class="nr">${entry/x}</p>
+			<p class="author"><strong>${entry/comment_author}</strong></p>
+		</div>
+		<ul class="bar">
+			<li class="added"><a href="#comment-${entry/comment_id}">${clock:entry/comment_added}</a></li>
+			<li><a href="${HREF}${backlink}/edit_comment/${entry/comment_id}#form-comments" class="edit"><span>${t:Edit}</span></a></li>
+			<li><a href="#comment-${entry/comment_id}" class="delete" accesskey="${entry/comment_id}"><span>${t:Delete}</span></a></li>
+		</ul>
+		<div class="text">${entry/comment_message}</div>
+	</li>
+</ol>
+
+<h3 class="subtitle2" id="form-comments">${if:edit_mode then:t:Edit comment else:t:Add comment}<a href="#form-comments" class="anchor">¶</a></h3>
+
+<form action="#form-comments" accept-charset="UTF-8" method="post" tal:condition="exists:form">
+	${note}
+	<div class="form-item">
+		<label for="form-author" tal:attributes="class if:err/author_empty | err/author_exists then: 'wrong'">${t:Author}: <span class="required">*</span></label>
+		<input class="text" size="60" type="text" id="form-author" name="author" value="${form/author}" tal:attributes="disabled php:LOGGED AND !edit_mode" />
+	</div>
+	<div class="form-item">
+		<label for="form-message" tal:attributes="class if:err/message_empty then:'wrong'">${t:Message}: <span class="required">*</span></label>
+		<textarea class="text resizable bbcode" name="message" id="form-message" rows="10" cols="60">${form/message}</textarea>
+	</div>
+	<div class="form-bottom">
+		<input type="submit" name="${if:edit_mode then:'edit' else:'add'}" value="${if:edit_mode then:t:Save else:t:Add}" />
+	</div>
+</form>

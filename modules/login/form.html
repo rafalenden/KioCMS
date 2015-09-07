@@ -1,0 +1,15 @@
+<form action="#form" accept-charset="UTF-8" method="post">
+	${note}
+	<div class="form-item">
+		<label for="form-logname" tal:attributes="class if:err/empty_logname | err/logname_not_exists ? 'wrong'">${t:Logname}: <span class="required">*</span></label>
+		<input type="text" id="form-logname" class="text" name="logname-session" value="${form/logname}" size="60" />
+		<div class="tip"><a href="${HREF}registration">${t:Register}</a></div>
+	</div>
+	<div class="form-item">
+		<label for="form-pass" tal:attributes="class if:err/password_empty | err/password_invalid ? 'wrong'">${t:Password}: <span class="required">*</span></label>
+		<input class="text" type="password" name="password-session" id="form-password" value="${form/password}" size="60" />
+		<div class="tip"><a href="${HREF}password">${t:Restore password}</a></div>
+	</div>
+	<input class="button" type="submit" name="login" value="${t:Log in}" />
+	<input name="module" value="1" type="hidden" />
+</form>

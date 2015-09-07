@@ -1,0 +1,8 @@
+#calendar table {text-align: center; width: 100%; border-collapse: separate; border-spacing: 1px; /*empty-cells: hide*/}
+#calendar th {font-weight: normal;}
+#calendar th, #calendar th,  #calendar a, #calendar caption {padding: 1px 0;}
+#calendar td {border:0 !important; padding: 0;}
+#calendar a {display: block;}
+#calendar td {width: 14%;}
+#calendar input.prev {float: left;}
+#calendar input.next {float: right;}

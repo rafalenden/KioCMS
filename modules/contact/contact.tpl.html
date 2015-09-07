@@ -1,0 +1,31 @@
+<form action="#" accept-charset="UTF-8" method="post">
+	${info}
+	${note}
+	<div class="form-item">
+		<label for="form-receiver">${t:To}: <span class="required">*</span></label>
+		<select name="receiver" id="form-receiver">
+			<option value="${receiver/id}" tal:attributes="selected php:form['receiver'] EQ receiver['id'] ? true : false" tal:repeat="receiver receivers">${receiver/nickname}${php:receiver['g_name'] ? ' ('. receiver['g_name'] .')' : null}</option>
+		</select>
+	</div>
+	<div class="form-item">
+		<label for="form-sender" tal:attributes="class if:err/sender_empty | err/sender_exists then:'wrong'">${t:Your name}: <span class="required">*</span></label>
+		<input class="text" size="60" type="text" id="form-sender" name="sender" value="${if:LOGGED then:user/nickname else:form/sender}" tal:attributes="disabled LOGGED" />
+	</div>
+	<div class="form-item">
+		<label for="form-email" tal:attributes="class if:err/email_empty | err/email_invalid then:'wrong'">${t:Your e-mail address}: <span class="required">*</span></label>
+		<input class="text" size="60" type="text" name="email" id="form-email" value="${if:LOGGED then:user/email else:form/email}" tal:attributes="disabled LOGGED" />
+	</div>
+	<div class="form-item">
+		<label for="form-subject" tal:attributes="class if:err/subject_empty then:'wrong'">${t:Subject}: <span class="required">*</span></label>
+		<input class="text" size="60" type="text" name="subject" id="form-subject" value="${form/subject}" />
+	</div>
+	<div class="form-item">
+		<label for="form-message" tal:attributes="class if:err/message_empty then:'wrong'">${t:Message}: <span class="required">*</span></label>
+		<textarea class="text limit resizable" name="message" id="form-message" cols="60" rows="10">${form/message}</textarea>
+		<div class="tip" tal:condition="message_limit">${t:Chars left}: <var title="${message_limit}" class="limit form-message">${message_limit}</var></div>
+	</div>
+	<div class="form-bottom">
+		<input type="submit" name="send" value="${t:Send}" />
+		<input type="hidden" name="auth" value="${AUTH}" />
+	</div>
+</form>

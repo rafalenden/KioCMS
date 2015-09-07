@@ -1,0 +1,21 @@
+<form action="#" method="post">
+	<table class="form">
+		<tr class="top">
+			<th>
+				<label for="form-name" tal:attributes="class php:errors[0] ? 'error' : null"><span class="required">*</span> ${lang2/CATEGORY_NAME}</label>
+			</th>
+			<td><input class="text" size="35" type="text" name="name" id="form-name" value="${form/name}" /></td>
+		</tr>
+		<tr>
+			<th><label for="form-description">${lang2/DESCRIPTION}</label></th>
+			<td><textarea name="description" id="form-description" rows="3" cols="50">${form/description}</textarea></td>
+		</tr>
+		<tr class="bottom">
+			<th></th>
+			<td>
+				<input class="button" type="submit" name="${php:form['edit_mode'] ? 'edit' : 'add'}" value="${php:form['edit_mode'] ? lang2['SAVE'] : lang2['ADD']}" />
+				<input type="reset" value="${lang_system/RESET}" class="button" title="${lang_system/RESET_TITLE}" />
+			</td>
+		</tr>
+	</table>
+</form>

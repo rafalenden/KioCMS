@@ -1,0 +1,14 @@
+<form action="#poll" method="post">
+	<div class="neutral">${lang/WELCOME_MESSAGE_ARCHIVE}</div>
+	<dl>
+		<dd class="option" tal:repeat="archived_poll archived_polls">
+			<label>
+				<input name="option_archive-poll" type="radio" value="${archived_poll/id}" />
+				<strong>${archived_poll/title}</strong>
+			</label>
+			<p class="date">${php:date(system['short_date_format'], archived_poll['created'])} / <acronym title="${lang/ARCHIVE_VOTES}">${archived_poll/votes}</acronym></p>
+		</dd>
+	</dl>
+	<input type="submit" value="${lang/SHOW}" class="button" name="show_archived-poll" />
+	<input type="submit" value="${lang/BACK}" class="button" title="${lang/BACK_TITLE}" name="back-poll" />
+</form>

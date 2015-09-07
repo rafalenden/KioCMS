@@ -1,0 +1,5 @@
+#shoutbox ol.shoutbox_entries {text-align: left; border: 1px solid #7AAEC8; height: 230px; overflow: auto; margin: 2% 0 4% 0; padding: 0;}
+#shoutbox.block ol.shoutbox_entries {font-size: 80%; line-height: normal;}
+#shoutbox li.shoutbox_entry {border: 1px solid #F2B569; overflow: hidden; padding: 2.5%; margin: 2.5%;}
+#shoutbox p.added {padding: 0 3% 2% 3%; border-bottom: 1px dashed #7AAEC8;}
+#shoutbox div.message {overflow: hidden; margin-top: 2%;}

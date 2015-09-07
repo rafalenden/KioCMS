@@ -1,0 +1,23 @@
+<form action="#calendar" method="post">
+	<table>
+		<caption>
+			<input class="button prev" type="submit" value="‹" name="prev_month" />
+			<input class="button next" type="submit" value="›" name="next_month" />
+			<strong>${month_year}</strong>
+		</caption>
+		<thead>
+			<tr class="border-1-parent background-1-parent">
+				<th>${t:Mo}</th>
+				<th>${t:Tu}</th>
+				<th>${t:We}</th>
+				<th>${t:Th}</th>
+				<th>${t:Fr}</th>
+				<th>${t:Sa}</th>
+				<th>${t:Su}</th>
+			</tr>
+		</thead>
+		<tbody>
+			${days}
+		</tbody>
+	</table>
+</form>

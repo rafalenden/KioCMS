@@ -1,0 +1,17 @@
+<form action="#poll" method="post">
+	<tal:block tal:condition="archive">${php:date(system['short_date_format'], topic['created'])}</tal:block>
+	<p class="question">${topic/title}</p>
+	<dl class="chart">
+		<tal:block tal:repeat="option options">
+			<dt tal:attributes="class php:your_vote == option['id'] ? 'chosen' : null">${option/title}</dt>
+			<dd title="${lang/OPTION_VOTES}: ${option/votes}">
+				<p style="width: ${option/percent}%;">&nbsp;</p>
+				<span>${option/percent}%</span>
+			</dd>
+		</tal:block>
+	</dl>
+	<p class="total_votes">${lang/VOTES}: <strong>${topic/votes}</strong></p>
+	<input type="submit" value="${lang/ARCHIVE}" class="button" title="${lang/ARCHIVE_TITLE}" name="archive-poll" />
+	<input name="propose-poll" type="submit" value="${lang/PROPOSE}" class="button" title="${lang/PROPOSE_TITLE}" tal:condition="not:archive" />
+	<input type="submit" value="${lang/BACK}" class="button" title="${lang/BACK_TITLE}" name="back-poll" tal:condition="archive" />
+</form>

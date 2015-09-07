@@ -1,0 +1,10 @@
+SQL Standard
+CREATE TABLE kio_users_groups
+(
+	gid SMALLINT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	display_order TINYINT(2) UNSIGNED NOT NULL,
+	inline VARCHAR(50) NOT NULL,
+	members INT(10) UNSIGNED NOT NULL,
+	permits TEXT NOT NULL
+);

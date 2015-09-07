@@ -1,0 +1,4 @@
+﻿Context.php:295 - usunięty problem nieistniejącego klucza
+State.php:252 - usunięcie funkcji phptal_escape()
+TalesInternal.php:415 - po zmianie jest możliwe dodawanie modyfikatorów jednoznakowych (t:)
+TalesInternal.php:454 - możliwe jest używanie funkcji PHP jako modyfikotorów bez ich wcześniejszego deklarowania (strtoupper:'dsfsf' lub strtoupper:obj/var)

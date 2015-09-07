@@ -1,0 +1,20 @@
+<ol class="shoutbox_entries" tal:condition="entries">
+	<li class="shoutbox_entry" tal:repeat="entry entries">
+		<strong class="author">${entry/author}</strong>
+		<p class="added">${clock:entry/added}</p>
+		<div class="message">${entry/message}</div>
+	</li>
+</ol>
+
+<form action="#shoutbox" method="post">
+	${note}
+	<label class="text ${if:err/author_empty | err/author_exists then:'wrong'}">
+		${t:Author}: <span class="required" title="${t:Required field}">*</span>
+		<input class="text" size="25" type="text" name="author-shoutbox" value="${form/author}" tal:attributes="disabled LOGGED" />
+	</label>
+	<label class="text ${if:err/message_empty then:'wrong'}">
+		${t:Message}: <span class="required" title="${t:Required field}">*</span>
+		<textarea class="text" name="message-shoutbox" rows="3" cols="17">${form/message}</textarea>
+	</label>
+	<input type="submit" value="${t:Reply}" name="reply-shoutbox" class="button" />
+</form>

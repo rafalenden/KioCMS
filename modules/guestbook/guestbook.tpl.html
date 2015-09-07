@@ -1,0 +1,53 @@
+<tal:block tal:condition="not:show_form">${note}</tal:block>
+
+<ol class="entries" tal:condition="entries">
+	<li class="box" id="entry-${entry/id}" tal:repeat="entry entries">
+		<span class="minipic" tal:condition="entry/avatar"><img src="${LOCAL}images/avatars/${entry/author_id}.${entry/avatar}" alt="${entry/avatar}" /></span>
+		<div class="header"><span class="nr">${entry/number}</span>
+			<p class="author"><strong>${entry/author}</strong>
+				<a tal:condition="entry/email" href="mailto:${entry/email}" class="e-mail"><img class="e-mail" src="${LOCAL}templates/${THEME}/images/e-mail.png" alt="e-mail" title="${t:E-mail}" /></a>
+				<a tal:condition="entry/website" href="${entry/website}" class="website"><img class="website" src="${LOCAL}templates/${THEME}/images/website.png" alt="website" title="${t:Website}" /></a>
+			</p>
+		</div>
+		<ul class="bar">
+			<li class="added"><a href="#entry-${entry/id}">${clock:entry/added}</a></li>
+			<li><a href="${HREF}guestbook/edit/${entry/id}#form" class="edit" title="${t:Edit entry}"><span>${t:Edit}</span></a></li>
+			<li><a href="#entry-${entry/id}" class="delete" accesskey="${entry/id}" title="${t:Delete entry}"><span>${t:Delete}</span></a></li>
+		</ul>
+		<div class="text">${entry/message}</div>
+		<div class="signature" tal:condition="entry/signature">${entry/signature}</div>
+	</li>
+</ol>
+
+<p class="pagination" tal:condition="pagination">${pagination}</p>
+
+<tal:block tal:condition="show_form">
+	<h3 class="subtitle2" id="form">
+	${if:edit_mode then:t:Edit entry else:t:Add entry}
+		<a href="#form" class="anchor">¶</a>
+	</h3>
+	<form action="#form" method="post">
+	${note}
+		<div class="form-item">
+			<label for="form-author" tal:attributes="class if:err/author_empty | err/author_exists then:'wrong'">${t:Author}: <span class="required" title="${t:Required field}">*</span></label>
+			<input class="text" size="60" type="text" id="form-author" name="author" value="${form/author}" tal:attributes="disabled php:LOGGED AND !edit_mode" />
+		</div>
+		<div class="form-item">
+			<label for="form-email" tal:attributes="class if:err/email_invalid then:'wrong'">${t:E-mail:}</label>
+			<input class="text" size="60" type="text" name="email" id="form-email" value="${form/email}" />
+		</div>
+		<div class="form-item">
+			<label for="form-website">${t:Website:}</label>
+			<input class="text" size="60" type="text" name="website" id="form-website" value="${form/website}" />
+		</div>
+		<div class="form-item">
+			<label for="form-message" tal:attributes="class if:err/message_empty | err/message_too_long | err/message_spam then:'wrong'">${t:Message}: <span class="required">*</span></label>
+			<textarea class="text limit resizable wysiwyg bbcode" name="message" id="form-message" cols="60" rows="10">${form/message}</textarea>
+			<div class="tip" tal:condition="message_limit">${t:Chars left}: <var title="${message_limit}" id="limit-form-message" class="limit form-message">${message_limit}</var></div>
+		</div>
+		<div class="form-buttons">
+			<input class="submit" type="submit" name="${if:edit_mode then:'edit' else:'add'}" value="${if:edit_mode then:t:Save else:t:Add}" />
+			<input type="hidden" name="auth" value="${AUTH}" />
+		</div>
+	</form>
+</tal:block>

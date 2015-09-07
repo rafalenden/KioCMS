@@ -1,0 +1,12 @@
+<ul class="bar corner">
+	<li class="added">${clock:entry/time cfg:short_date_format}</li>
+	<li class="author">${t:Author}: <strong>${entry/author}</strong></li>
+	<li class="category" tal:condition="entry/category_id">${t:Category}: <a href="${HREF}news/category/${entry/c_id}/${clean_url:entry/c_name}" title="${php:entry['c_description'] ? entry['c_description'] : t('Category: %category', array('%category' => entry['c_name']))}">${entry/c_name}</a></li>
+	<li><a class="print">${t:Print}</a></li>
+</ul>
+
+<div class="content stretch">${parse:entry/content 12345}</div>
+
+<div id="more" class="stretch" tal:condition="entry/extended_content">${entry/extended_content}</div>
+
+<tal:block>${comments}</tal:block>

@@ -1,0 +1,160 @@
+<form action="#" accept-charset="UTF-8" method="post" enctype="multipart/form-data">
+	${note}
+
+	<div class="form-item">
+		<input class="button" type="submit" name="edit" value="${t:Save}" />
+		<input type="hidden" name="auth" value="${AUTH}" />
+	</div>
+
+	<fieldset id="box-basic_informations">
+		<legend><a href="#box-basic_informations">${t:Basic informations}</a></legend>
+		<div class="form-item">
+			<label for="form-nickname" tal:attributes="class if:err/nickname_empty | err/nickname_exists then:'wrong'">${t:Nickname}: <span class="required">*</span></label>
+			<input class="text" size="60" type="text" name="nickname" id="form-nickname" value="${if:allow_change_nick then:form/nickname else:profile/nickname}" tal:attributes="disabled not:allow_change_nick" />
+			<div class="tip">${if:allow_change_nick then:t:NICKNAME_NOTE else:t:NICKNAME_NOTE2}</div>
+		</div>
+		<div class="form-item">
+			<label for="form-email" tal:attributes="class if:err/email_empty | err/email_invalid | err/email_exists then:'wrong'">${t:E-mail}: <span class="required">*</span></label>
+			<input class="text" size="60" type="text" name="email" id="form-email" value="${form/email}" />
+		</div>
+	</fieldset>
+
+	<fieldset id="box-change_password" class="collapsible collapsed">
+		<legend><a href="#box-change_password">${t:Change password}</a></legend>
+		<div class="form-item">
+			<label for="form-old_password" tal:attributes="class if:err/password_incorrect then:'wrong'">${t:Old password}:</label>
+			<input class="text" size="60" type="password" name="old_password" id="form-old_password" value="${form/old_password}" />
+			<div class="tip">Required if you want change password</div>
+		</div>
+		<div class="form-item">
+			<label for="form-password" tal:attributes="class if:err/password_differ then:'wrong'">${t:New password}:</label>
+			<input class="text" size="60" type="password" name="password" id="form-password" value="${form/password}" />
+		</div>
+		<div class="form-item">
+			<label for="form-password2" tal:attributes="class if:err/password_differ then:'wrong'">${t:Repeat new password}:</label>
+			<input class="text" size="60" type="password" name="password2" id="form-password2" value="${form/password2}" />
+		</div>
+	</fieldset>
+
+	<fieldset id="box-personal_data">
+		<legend><a href="#box-personal_data">${t:Personal data}</a></legend>
+		<div class="form-item">
+			<label for="form-forename">${t:Forename}:</label>
+			<input class="text" size="60" type="text" name="forename" id="form-forename" value="${form/forename}" />
+		</div>
+		<div class="form-item">
+			<label for="form-surname">${t:Surname}:</label>
+			<input class="text" size="60" type="text" name="surname" id="form-surname" value="${form/surname}" />
+		</div>
+		<div class="form-item">
+			<label for="form-gender">${t:Gender}:</label>
+			<select name="gender" id="form-gender">
+				<option value="0">-</option>
+				<option value="1" tal:attributes="selected php:form['gender'] EQ 1">${t:Male}</option>
+				<option value="2" tal:attributes="selected php:form['gender'] EQ 2">${t:Female}</option>
+			</select>
+		</div>
+		<div class="form-item">
+			<label for="form-locality">${t:Locality}:</label>
+			<input class="text" size="60" type="text" name="locality" id="form-locality" value="${form/locality}" />
+		</div>
+		<div class="form-item">
+			<label for="form-country">${t:Country}:</label>
+			<select id="form-country" name="country">
+				<option value="">-</option>
+				<option value="${country}" tal:attributes="selected php:country == form['country']" tal:repeat="country php:array_keys(countries)">
+				${php:countries[country]}</option>
+			</select>
+		</div>
+		<div class="form-item">
+			<label for="form-communicator">${cfg:communicator_name}:</label>
+			<input class="text" size="60" type="text" name="communicator" id="form-communicator" value="${form/communicator}" />
+		</div>
+		<div class="form-item">
+			<label for="form-website">${t:Website}:</label>
+			<input class="text" size="60" type="text" name="website" id="form-website" value="${form/website}" />
+		</div>
+		<div class="form-item">
+			<label for="form-birthdate" tal:attributes="class if:err/birthdate_invalid then:'wrong'">${t:Birthdate}:</label>
+			<select name="birthdate[2]">
+				<option value="">-</option>
+				<option tal:repeat="i php:range(1, 31)" tal:attributes="selected php:form['birthdate'][2] == i">${i}</option>
+			</select>
+			<select name="birthdate[1]">
+				<option value="">-</option>
+				<option tal:repeat="i php:range(1, 12)" value="${i}" tal:attributes="selected php:form['birthdate'][1] == i">${php:t(Kio::$months[i])}</option>
+			</select>
+			<select name="birthdate[0]">
+				<option value="">-</option>
+				<option tal:repeat="i php:range(1905, 2005)" tal:attributes="selected php:form['birthdate'][0] == i">${i}</option>
+			</select>
+		</div>
+	</fieldset>
+
+	<fieldset id="box-preferences" class="collapsible collapsed">
+		<legend><a href="#box-preferences">${t:E-mail preferences}</a></legend>
+		<div class="form-item">
+			<label><input name="newsletter" type="checkbox" tal:attributes="checked form/newsletter" /> ${t:Sign in to newsletter}</label>
+		</div>
+		<div class="form-item">
+			<label><input name="pm_notify" type="checkbox" tal:attributes="checked form/pm_notify" /> ${t:Send e-mail to me when someone send PM to my account}</label>
+		</div>
+		<div class="form-item">
+			<label><input name="hide_email" type="checkbox" tal:attributes="checked form/hide_email" /> ${t:Hide my e-mail address}</label>
+		</div>
+	</fieldset>
+
+	<fieldset id="box-avatar" class="collapsible">
+		<legend><a href="#box-avatar">${t:Avatar}</a></legend>
+		<tal:block condition="profile/avatar">
+			<div class="form-item"><img src="${LOCAL}images/avatars/${profile/id}.${profile/avatar}" alt="${t:Avatar}" /></div>
+			<div class="form-item">
+				<label><input type="checkbox" name="delete_avatar" tal:attributes="checked form/delete_avatar" /> ${t:Delete avatar}</label>
+			</div>
+		</tal:block>
+
+		<div class="form-item">
+			<label for="form-avatar">${t:Upload avatar}:</label>
+			<input type="file" id="form-avatar" name="avatar" size="35" />
+			<div class="tip">${t:Maximum size}: 220 KB<br />${t:Allowed file types}: png, gif, jpg</div>
+		</div>
+	</fieldset>
+
+	<fieldset id="box-photo" class="collapsible collapsed">
+		<legend><a href="#box-photo">${t:Photo}</a></legend>
+		<tal:block condition="profile/photo">
+			<div class="form-item"><img src="${LOCAL}images/photos/${profile/id}.${profile/photo}" alt="${t:Photo}" /></div>
+			<div class="form-item">
+				<label><input type="checkbox" name="delete_photo" tal:attributes="checked form/delete_photo" /> ${t:Delete photo}</label>
+				<a href="${HREF}edit_profile/photo">${t:Change photo}</a>
+			</div>
+		</tal:block>
+
+		<tal:block condition="not:profile/photo" class="collapsible">
+			<div class="form-item"><a href="${HREF}edit_profile/photo">${t:Add photo}</a></div>
+		</tal:block>
+	</fieldset>
+
+	<fieldset id="box-about_myself">
+		<legend><a href="#box-about_myself">${t:About myself}</a></legend>
+		<div class="form-item">
+			<label for="form-title">${t:Title}:</label>
+			<input class="text" size="60" type="text" name="title" id="form-title" value="${form/title}" />
+			<div class="tip">${t:Title note}</div>
+		</div>
+		<div class="form-item">
+			<label for="form-interests">${t:Interests}:</label>
+			<input class="text" size="60" type="text" name="interests" id="form-interests" value="${form/interests}" />
+		</div>
+		<div class="form-item">
+			<label for="form-signature">${t:Signature}:</label>
+			<textarea class="text resizable bbcode" name="signature" id="form-signature" cols="60" rows="10">${form/signature}</textarea>
+		</div>
+	</fieldset>
+
+	<div class="form-item">
+		<input class="button" type="submit" name="edit" value="${t:Save}" />
+		<input type="hidden" name="auth" value="${AUTH}" />
+	</div>
+</form>
+

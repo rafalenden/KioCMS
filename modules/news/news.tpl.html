@@ -1,0 +1,15 @@
+<ol class="entries">
+	<li class="box" tal:repeat="entry entries">
+		<h3 class="header"><a href="${HREF}news/read/${entry/id}/${entry/url_title}" tal:attributes="title if:entry/description then:entry/description">${entry/title}</a></h3>
+		<ul class="bar">
+			<li class="date">${clock:entry/added cfg:short_date_format}</li>
+			<li class="category" tal:condition="entry/category_id"><a href="${HREF}news/category/${entry/c_id}/${clean_url:entry/c_name}" tal:attributes="title php:entry['c_description'] ? entry['c_description'] : t('Category: %category', array('%category' => entry['c_name']))">${entry/c_name}</a></li>
+			<li class="author"><strong>${entry/author}</strong></li>
+			<li class="comments" tal:condition="php:entry['comments'] != -1"><a href="${HREF}news/read/${entry/id}/${clean_url:entry/title}#comments">${php:entry['comments'] ? t('Comments (%comments)', array('%comments' => entry['comments'])) : t('Add comment')}</a></li>
+			<li class="more" tal:condition="entry/extended_content"><a href="${HREF}news/read/${entry/id}#more" title="${entry/title}">${t:Read more}</a></li>
+		</ul>
+		<div class="text">${entry/content}</div>
+	</li>
+</ol>
+
+<p class="pagination" tal:condition="pagination">${pagination}</p>

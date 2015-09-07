@@ -1,0 +1,59 @@
+<form action="${HREF}admin/modules/guestbook/settings" method="post">
+	${info}
+	<table class="form">
+		<tr class="top title">
+			<th></th>
+			<td>${lang_admin/personalization}</td>
+		</tr>
+		<tr>
+			<th><label for="form-columns">${lang_admin/COLUMNS}</label></th>
+			<td>${columns}</td>
+		</tr>
+		<tr>
+			<th><label for="form-message_max"><span class="required">*</span> ${lang2/MESSAGE_MAX}</label></th>
+			<td><input type="text" name="form[message_max]" id="form-message_max" value="${form/message_max}" class="auto" size="3" /></td>
+		</tr>
+		<tr>
+			<th><label for="form-limit"><span class="required">*</span> ${lang2/ENTRIES_PER_PAGE}</label></th>
+			<td><input type="text" name="form[limit]" id="form-limit" value="${form/limit}" class="auto" size="2" /></td>
+		</tr>
+		<tr>
+			<th><label for="form-order_by"><span class="required">*</span> ${lang2/ORDER_BY}</label></th>
+			<td><select name="form[order_by]" id="form-order_by"><option value="ASC" tal:attributes="selected php:form['order_by'] == 'ASC'">Rosnąco</option><option value="DESC" tal:attributes="selected php:form['order_by'] == 'DESC'">Malejąco</option></select></td>
+		</tr>
+		<tr>
+			<th><label for="form-flood_interval">${lang2/FLOOD_INTERVAL}</label></th>
+			<td><input type="text" name="form[flood_interval]" id="form-flood_interval" value="${form/flood_interval}" class="auto" size="3" /> sekund
+				<div class="note">${lang2/FLOOD_INTERVAL_NOTE}</div>
+			</td>
+		</tr>
+		<tr>
+			<th rowspan="2"><label>${lang_admin/OPTIONS}</label></th>
+			<td><label><input name="bbcode" type="checkbox" tal:attributes="checked form/bbcode" /> ${lang_admin/BBCODE}</label>
+				<div class="note">${lang_admin/BBCODE_MODULE_NOTE}</div>
+			</td>
+		</tr>
+		<tr>
+			<td><label><input name="allow_signatures" type="checkbox" tal:attributes="checked form/allow_signatures" /> ${lang2/ALLOW_SIGNATURES}</label></td>
+		</tr>
+		<tr class="title">
+			<th></th>
+			<td>${lang_admin/BLOCKS}</td>
+		</tr>
+		<tr>
+			<th><label>${lang_admin/BLOCKS_LEFT}</label></th>
+			<td class="blocks">${blocks/left}</td>
+		</tr>
+		<tr>
+			<th><label>${lang_admin/BLOCKS_RIGHT}</label></th>
+			<td class="blocks">${blocks/right}</td>
+		</tr>
+		<tr class="bottom">
+			<th></th>
+			<td>
+				<input type="submit" name="save" value="${lang_admin/save}" class="button submit" />
+				<input type="reset" value="${lang_admin/RESET}" class="button reset" />
+			</td>
+		</tr>
+	</table>
+</form>

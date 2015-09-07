@@ -1,0 +1,73 @@
+<ul class="window">
+	<li tal:condition="profile/avatar"><img src="${LOCAL}images/avatars/${profile/id}.${profile/avatar}" alt="${t:Avatar}" title="${t:Avatar}" class="avatar" /></li>
+	<li tal:condition="profile/group">${profile/group}</li>
+	<li tal:condition="profile/title">${profile/title}</li>
+	<li><a href="${HREF}pm/write/${profile/id}"><img src="${LOCAL}themes/${THEME}/images/pm.png" alt="pm" title="${t:PM}" /></a></li>
+</ul>
+
+<dl class="elements">
+	<tal:block tal:condition="profile/forename">
+		<dt>${t:Forename}:</dt>
+		<dd>${profile/forename}</dd>
+	</tal:block>
+	<tal:block tal:condition="profile/surname">
+		<dt>${t:Surname}:</dt>
+		<dd>${profile/surname}</dd>
+	</tal:block>
+	<dt>${t:Registered}:</dt>
+	<dd>${clock:profile/registered}</dd>
+	<tal:block tal:condition="profile/last_visit">
+		<dt>${t:Last visit}:</dt>
+		<dd>${clock:profile/last_visit}</dd>
+	</tal:block>
+	<tal:block tal:condition="profile/gender">
+		<dt>${t:Gender}:</dt>
+		<dd>${profile/gender}</dd>
+	</tal:block>
+	<tal:block tal:condition="profile/birthdate">
+		<dt>${t:Birthdate}:</dt>
+		<dd>${profile/birthdate}</dd>
+		<dt>${t:Age}:</dt>
+		<dd>${profile/age}</dd>
+		<tal:block tal:condition="profile/zodiac">
+			<dt>${t:Zodiac sign}:</dt>
+			<dd>${profile/zodiac}</dd>
+		</tal:block>
+	</tal:block>
+	<tal:block tal:condition="php:profile['locality'] || profile['country']">
+		<dt>${t:Location}:</dt>
+		<dd>${profile/locality} <img src="${LOCAL}images/flags/${profile/country}.png" class="flag" alt="${profile/country}" title="lang_system['countries'][profile['country']]" tal:condition="profile/country" />&nbsp;</dd>
+	</tal:block>
+	<tal:block tal:condition="not:profile/hide_email">
+		<dt>${t:E-mail}:</dt>
+		<dd><a href="${mailto:profile/email}">${hash_email:profile/email}</a></dd>
+	</tal:block>
+	<tal:block tal:condition="profile/communicator">
+		<dt>${cfg:communicator_name}:</dt>
+		<dd>${communicator:profile/communicator}&nbsp;</dd>
+	</tal:block>
+	<tal:block tal:condition="is_string:profile/browser/name">
+		<dt>${t:Browser}:</dt>
+		<dd>${profile/browser/name}</dd>
+	</tal:block>
+	<tal:block tal:condition="is_string:profile/os/name">
+		<dt>${t:Operating system}:</dt>
+		<dd>${profile/os/name}</dd>
+	</tal:block>
+	<tal:block tal:condition="profile/website">
+		<dt>${t:Website}:</dt>
+		<dd><a href="${profile/website}" class="external">${php:cut(profile['website'], 35)}</a></dd>
+	</tal:block>
+	<tal:block tal:condition="profile/photo">
+		<dt>${t:Photo}:</dt>
+		<dd><img src="${LOCAL}images/photos/${profile/id}.${profile/photo}" alt="${t:Photo}" class="photo" />&nbsp;</dd>
+	</tal:block>
+	<tal:block tal:condition="profile/interests">
+		<dt>${t:Interests}:</dt>
+		<dd>${profile/interests}</dd>
+	</tal:block>
+	<tal:block tal:condition="profile/signature">
+		<dt>${t:Signature}:</dt>
+		<dd>${profile/signature}</dd>
+	</tal:block>
+</dl>

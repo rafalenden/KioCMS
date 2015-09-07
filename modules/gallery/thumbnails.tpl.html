@@ -1,0 +1,16 @@
+<h3 class="subtitle" tal:condition="album/description">${album/description}</h3>
+${note}
+<ul class="thumbnails" tal:condition="images">
+	<li tal:repeat="image images">
+		<span class="border-1">
+			<a href="${HREF}gallery/image/${image/id}/${clean_url:image/name}" tal:attributes="title if:image/description then:image/description"><img class="thumb" src="${LOCAL}modules/gallery/images/thumbnails/${image/id}.${image/file_extension}" alt="${image/name}" /></a>
+			<strong class="border-1">
+				<a href="${HREF}gallery/image/${image/id}/${clean_url:image/name}" tal:attributes="title if:image/description then:image/description">${image/name}</a>
+			</strong>
+			<em>${clock:image/added cfg:short_date_format}</em>
+			<em>${t:Comments}: ${image/comments}</em>
+		</span>
+	</li>
+</ul>
+
+<p class="pagination" tal:condition="pagination">${pagination}</p>

@@ -1,0 +1,103 @@
+<form action="${HREF}admin/modules/news/${php:form['edit_mode'] ? 'edit/' . entry['id'] : 'add'}" method="post">
+	<table class="form">
+		<tr class="title">
+			<th></th>
+			<td>${lang2/MAIN_INFORMATIONS}</td>
+		</tr>
+		<tr class="top">
+			<th><label for="form-title" tal:attributes="class php:errors[0] ? 'error' : null"><span class="required">*</span> ${lang2/TITLE}</label></th>
+			<td><input class="text" type="text" name="title" id="form-title" value="${form/title}" size="35" /></td>
+		</tr>
+		<tr>
+			<th><label for="form-category">${lang2/CATEGORY}</label></th>
+			<td>
+				<select name="category_id" id="form-category">
+					<option value="0">-</option>
+					<option value="${category/id}" tal:attributes="selected php:form['category_id'] == category['id']" tal:repeat="category categories">${category/name}</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="form-author" tal:attributes="class php:errors[1] ? 'error' : null"><span class="required">*</span> ${lang2/AUTHOR}</label></th>
+			<td><input class="text" size="35" type="text" name="author" id="form-author" value="${form/author}" /></td>
+		</tr>
+		<tr class="title">
+			<th></th>
+			<td>${lang2/META}</td>
+		</tr>
+		<tr>
+			<th><label for="form-description">${lang2/DESCRIPTION}</label></th>
+			<td><textarea name="description" id="form-description" rows="3" cols="50">${form/description}</textarea></td>
+		</tr>
+		<tr>
+			<th><label for="form-keywords">${lang2/KEYWORDS}</label></th>
+			<td><input class="text" size="35" type="text" name="keywords" id="form-keywords" value="${form/KEYWORDS}" /></td>
+		</tr>
+		<tr class="title">
+			<th></th>
+			<td>${lang2/ADDITIONAL}</td>
+		</tr>
+		<tr>
+			<th rowspan="4"><label>Opcje</label></th>
+			<td><label><input name="html" type="checkbox" tal:attributes="checked form/html" /> HTML</label></td>
+		</tr>
+		<tr>
+			<td><label><input name="bbcode" type="checkbox" tal:attributes="checked form/bbcode" /> BBCode</label>
+				<div class="note">Formatuje tekst (np. [b]pogrubienie[/b])</div>
+			</td>
+		</tr>
+		<tr>
+			<td><label><input name="emoticons" type="checkbox" tal:attributes="checked form/emoticons" /> Emotikony</label></td>
+		</tr>
+		<tr>
+			<td><label><input name="comments" type="checkbox" tal:attributes="checked form/comments" /> Komentarze</label></td>
+		</tr>
+		<tr>
+			<th><label for="form-type">${lang2/PUBLISHED}</label></th>
+			<td>
+				<select name="publication" id="form-type">
+					<option value="1">${lang2/YES}</option>
+					<option value="0">${lang2/NO}</option>
+					<option value="2">${lang2/ONLY_FOR_LOGGED}</option>
+				</select></td>
+		</tr>
+		<tr>
+			<th><label for="form-added"><span class="required">*</span> ${lang2/PUBLISH_TIME}</label></th>
+			<td>
+				<input type="text" class="auto" size="2" maxlenght="2" name="added[0]" value="${form/added/0}" />
+				<select name="added[1]">
+					<option tal:attributes="selected php:form['added'][1] == x" value="${x}" tal:repeat="x php:range(1, 12)">${php:lang_system['MONTHS'][x]}</option>
+				</select>
+				<input type="text" class="auto" size="4" maxlenght="4" name="added[2]" value="${form/added/2}" /><br />
+				<input type="text" class="auto" size="2" maxlenght="2" name="added[3]" value="${form/added/3}" />:<input type="text" class="auto" size="2" maxlenght="2" name="added[4]" value="${form/added/4}" />
+				<div class="note">${lang2/PUBLISH_TIME_NOTE}</div>
+			</td>
+		</tr>
+		<tr class="title">
+			<th></th>
+			<td>${lang2/CONTENT}</td>
+		</tr>
+		<tr>
+			<th><label for="form-content" tal:attributes="class php:errors[2] ? 'error' : null"><span class="required">*</span> ${lang2/BASIC_CONTENT}</label></th>
+			<td>${php:panel('form-content')}<textarea class="auto" name="content" id="form-content" rows="8" cols="60">${form/content}</textarea></td>
+		</tr>
+		<tr>
+			<th><label for="form-extended_content">${lang2/EXTENDED_CONTENT}</label></th>
+			<td>${php:panel('form-extended_content')}<textarea class="auto" name="extended_content" id="form-extended_content" rows="12" cols="60">${form/extended_content}</textarea></td>
+		</tr>
+		<tr>
+			<th rowspan="2"><label>Przywracanie stanu</label></th>
+			<td><label><input name="delete_comments" type="checkbox" tal:attributes="checked form/delete_comments" /> Usuń komentarze</label></td>
+		</tr>
+		<tr>
+			<td><label><input name="reset_views" type="checkbox" tal:attributes="checked form/reset_views" /> Zeruj licznik wyświetleń</label></td>
+		</tr>
+		<tr class="bottom">
+			<th></th>
+			<td>
+				<input class="button submit" type="submit" name="${php:form['edit_mode'] ? 'edit' : 'add'}" value="${php:form['edit_mode'] ? lang2['SAVE'] : lang2['ADD']}" />
+				<input type="reset" value="${lang2/RESET}" class="button reset" />
+			</td>
+		</tr>
+	</table>
+</form>

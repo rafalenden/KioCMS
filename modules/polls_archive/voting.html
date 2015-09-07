@@ -1,0 +1,9 @@
+<form action="#poll" method="post">
+	<dl>
+		<dt class="question"><strong>${topic/title}</strong></dt>
+		<dd class="option" tal:repeat="option options">
+			<label><input name="option-poll" type="radio" value="${option/id}" /> ${option/title}</label>
+		</dd>
+	</dl>
+	<input type="submit" value="${lang/VOTE}" class="button" name="vote-poll" />
+</form>

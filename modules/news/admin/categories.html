@@ -1,0 +1,34 @@
+<form method="post" id="check_all" action="#">
+	<table class="list">
+		<thead>
+			<tr>
+				<td class="pagination" colspan="6">${pagination} ${limit_form}</td>
+			</tr>
+			<tr>
+				<th class="first tight"><input class="check_all" type="checkbox" value="check_all" /></th>
+				<th class="left" colspan="2">${sorters/id} / ${sorters/name}</th>
+				<th class="left">${sorters/description}</th>
+				<th>${sorters/entries}</th>
+				<th class="last">Opcje</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td class="pagination" colspan="6">${pagination}
+					<p class="total">Wszystkich: <strong>${total_categories}</strong></p>
+					<input type="submit" class="button" name="delete" value="${lang_admin/DELETE_SELECTED}" />
+				</td>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr tal:repeat="category categories">
+				<td class="first"><label><input type="checkbox" name="entry" value="${category/id}" /></label></td>
+				<td class="tight">${category/id}</td>
+				<td class="left"><a href="${HREF}news/category/${category/id}/${php:clean_url(category['name'])}">${category/name}</a></td>
+				<td class="left">${php:category['description'] ? category['description'] : '&nbsp;'}</td>
+				<td>${category/entries}</td>
+				<td class="last"><a href="${HREF}admin/modules/news/edit_category/${category/id}" class="edit">Edytuj</a> | <a href="${HREF}guestbook/delete/${category/id}" class="delete">Usuń</a></td>
+			</tr>
+		</tbody>
+	</table>
+</form>

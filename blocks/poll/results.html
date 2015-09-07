@@ -1,0 +1,17 @@
+<form action="#poll" method="post">
+
+	${note}
+
+	<p class="question">${topic/title}</p>
+	<dl class="chart">
+		<tal:block tal:repeat="option options">
+			<dt tal:attributes="class php:vote_id == option['id'] ? 'chosen' : null">${option/title}</dt>
+			<dd title="${t:Votes}: ${option/votes}">
+				<p style="width: ${option/percent}%;">&nbsp;</p>
+				<span>${option/percent}%</span>
+			</dd>
+		</tal:block>
+	</dl>
+	<p class="total_votes">${t:Total votes}: <strong>${topic/votes}</strong></p>
+	<a href="${HREF}polls_archive">${t:Polls archive}</a>
+</form>

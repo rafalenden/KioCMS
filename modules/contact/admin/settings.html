@@ -1,0 +1,35 @@
+<form action="${HREF}admin/modules/contact" method="post">
+	${note}
+	<table class="form">
+		<tr class="top title">
+			<th></th>
+			<td>${t:Personalization}</td>
+		</tr>
+		<tr>
+			<th><label for="form-columns">${t:Columns}</label></th>
+			<td>${columns}</td>
+		</tr>
+		<tr>
+			<th><label for="form-receivers" tal:attributes="class if:err/receivers_empty ? 'error'"><span class="required">*</span> ${t:Receivers}</label></th>
+			<td><input type="text" name="form[receivers]" value="${form/receivers}" class="text" size="35" id="form-receivers" />
+				<div class="description">${t:Users ID separated by commas, to whom will be possible send emails through the contact form}</div>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="form-informations">${t:Informations}</label></th>
+			<td><textarea class="text" name="form[informations]" id="form-informations" rows="5" cols="40">${form/informations}</textarea></td>
+		</tr>
+		<tr>
+			<th><label>${t:Left side} <input type="checkbox" name="left" /></label></th>
+			<td class="blocks">${blocks/left}</td>
+		</tr>
+		<tr>
+			<th><label>${t:Right side} <input type="checkbox" name="right" /></label></th>
+			<td class="blocks">${blocks/right}</td>
+		</tr>
+		<tr class="bottom">
+			<th></th>
+			<td><input type="submit" name="save" value="${t:Save}" class="button submit" /></td>
+		</tr>
+	</table>
+</form>

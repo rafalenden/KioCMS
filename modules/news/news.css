@@ -1,0 +1,5 @@
+.news-read div.module-content {text-align: left;}
+.news-read div.module-content div.content, .news-read div.module-content #more {padding: 3%;}
+.news-read div.module-content #more {border-top: 1px dotted #fff;}
+.news-entries li.box {border: 0; margin: 1% auto 3% auto; width: auto;}
+.news-entries ul.bar li:first-child {border-left: 1px solid #7AAEC8; border-radius: 0 0 0 8px;}
